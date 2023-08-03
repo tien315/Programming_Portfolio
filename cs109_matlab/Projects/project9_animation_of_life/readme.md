@@ -8,6 +8,10 @@ This project was a class assignment to write a script animating and simulating t
 
 The common method for edge checks were complex nested if statements, instead I used a larger matrix than the starting grid where the edges were the 'neighbors' from the other side.
 
+<p align="center">
+<img src="cs109_matlab/Projects/project9_animation_of_life/animation_of_life.jpg" align="center" width=950/>
+</p>
+
 ```Matlab
 %Project 9 - Animation of Life
 %Alan Tieng
