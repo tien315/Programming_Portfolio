@@ -6,3 +6,7 @@ You can find me at:
 [LinkedIn](https://www.linkedin.com/in/alantieng)
 
 Email: [alandtieng@gmail.com](alandtieng@gmail.com)
+
+**Table of Contents**
+
+-[The Monty Hall Problem](monty_hall)
