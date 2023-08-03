@@ -10,14 +10,13 @@ clc;
 load('startingGrids.mat');
 
 %test code
-
  gridOut = runLife(gridStill, 10);
  gridOut = runLife(gridBlinkers, 25); 
  gridOut = runLife(gridToadBeacon, 21);
  gridOut = runLife(gridRandom, 50);
  gridOut = runLife(gridSpaceShip, 50);
  gridOut = runLife(gridRandomBig, 150);
-%}
+
 
 end
 
