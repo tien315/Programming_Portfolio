@@ -1,4 +1,10 @@
-%
+clear all;
+close all;
+clc;
+
+%Count down from second user input to first user input by every other
+%number.
+
 while true
     first_user_input = input('Enter a number between 1 and 50: ');
     if(first_user_input>0)&(first_user_input<51)
