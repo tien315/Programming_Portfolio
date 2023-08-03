@@ -6,7 +6,9 @@ loss = 0;
 n = 0;
 doors = 3;
 
-while n < 1000
+iter = input('How many iterations? ');
+
+while n < iter
     goal = randi(doors);
     choice = randi(doors);
 
