@@ -66,7 +66,7 @@ end
 % X101.2568 or U-0.303).  This function separates the number and converts 
 % it into a double as the output.
 function foundExp = findExp(vec, i)
-    foundExp = str2double(regexp(vec{i},'[\d.]+','match'));
+    foundExp = str2double(regexp(vec{i},'[\d.\-]+','match'));
     return
 end
 
