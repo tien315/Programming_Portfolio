@@ -57,10 +57,16 @@ for i = 1:size(G,1)
    
    %append spaces to last lines
    if i==size(G,1)
-       f{i} = ' ';
-       x{i} = ' ';
-       y{i} = ' ';
-       U{i} = ' ';
+       
+       if G{i} ~= "M30" || G{i} ~= "M31"
+           G{i+1} = "M30";
+       end
+
+       x{i+1} = ' ';
+       y{i+1} = ' ';
+       U{i+1} = ' ';
+       f{i+1} = ' ';
+       
    end
 
 end
