@@ -1,6 +1,6 @@
 # Conversion of U to I-J Circular Interpolation in G-Code
 
-This script came about when someone wanted to use an online G-Code editor with their .nc file.  Unfortunately, it does't seem that anyone makes a free editor that can read U-arc interpolations and editing 2000+ lines of code by hand was out of the question.  I created this script to take an .nc file, parse it for G02 or G03 commands, calculate centerpoints for I-J interpolations, then rewrite the file.
+This script takes an .nc file, parses it for G02 or G03 commands, calculates centerpoints for I-J interpolations, then rewrites the file.
 
 > This has only been tested on .nc files formatted for use with [Leister](https://www.leister.com/en/Laser-Systems) laser welders.
 
