@@ -15,8 +15,8 @@ clc;
 %% User input
 
 theta = input('Degrees of rotation: ');;
-originPrime(1) = input('Point of rotation X: ');
-originPrime(2) = input('Point of rotation Y: ');
+originPrime(1) = -input('Point of rotation X: ');
+originPrime(2) = -input('Point of rotation Y: ');
 readFileName = input('Input filename: ', "s");
 writeFileName = input('Output filename: ', "s");
 
