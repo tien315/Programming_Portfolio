@@ -5,17 +5,15 @@ clc;
 
 %Gcode rotation
 
-%%TODO
-%add code for rotation about a point other than the origin
-%T(x,y)*R*T(-x,-y)*P = P'
-
 %% User input
 
-theta = input('Degrees of rotation: ');
+theta = input('Degrees of rotation: ');;
+originPrime(1) = -input('Point of rotation X: ');
+originPrime(2) = -input('Point of rotation Y: ');
 readFileName = input('Input filename: ', "s");
 writeFileName = input('Output filename: ', "s");
 
-% Parse Text and calculate new center points
+% Parse Text
 
 fid = fopen(readFileName);
 text = textscan(fid, '%s%s%s%s%s', 'Delimiter', ' ', ...
@@ -29,36 +27,37 @@ y = text{3};
 U = text{4};
 f = text{5};
 
-%%
+%% Calculate new points
 for i = 1:size(G,1)
    if (G{i} == "G0" || G{i} == "G1" || G{i} == "G2") || (G{i} == "G3" ...
            || G{i} == "G01" || G{i} == "G02") || (G{i} == "G03")
        
        %Extract position as double from string
-       xPos = findExp(x,i);
-       yPos = findExp(y,i);
-       
-       %Rotation matrix
-       Q = [cosd(theta), -sind(theta); sind(theta), cosd(theta)];
+       oldPos = [findExp(x,i); findExp(y,i); 1];
 
-       %Rotate about origin and find new coordinates
-       posPrime = (Q^-1)*[xPos;yPos];
+       %Rotation matrix
+       Q = [cosd(theta), -sind(theta), 0; sind(theta), cosd(theta), 0;...
+           0, 0, 1];
+
+       %Translation matrix
+       T = [1, 0, originPrime(1); 0, 1, originPrime(2); 0, 0, 1];
+
+       %Rotate and find new coordinates
+       oldPos = T*oldPos;
+       posPrime = (Q)*oldPos;
+       posPrime = (T^-1)*posPrime;
 
        x{i} = convertStringsToChars("X"+num2str(posPrime(1)));
        y{i} = convertStringsToChars("Y"+num2str(posPrime(2)));
    end
    
-   %append spaces to last lines
+   %append spaces to last lines (M30 or M31)
    if i==size(G,1)
-       
-       if G{i} ~= "M30" || G{i} ~= "M31"
-           G{i+1} = "M30";
-       end
 
-       x{i+1} = ' ';
-       y{i+1} = ' ';
-       U{i+1} = ' ';
-       f{i+1} = ' ';
+       x{i} = ' ';
+       y{i} = ' ';
+       U{i} = ' ';
+       f{i} = ' ';
        
    end
 
