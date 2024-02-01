@@ -139,16 +139,20 @@ for i = 1:length(text)
 
 end
 
+%TODO: Clean Up
 G = newText(:,1);
 x = newText(:,2);
 y = newText(:,3);
-if size(newText, 2) == 4
+if size(newText,2) == 4
   U = newText(:,4);
-endif
-if size(newText,2) == 5
+elseif size(newText,2) == 5
+  U = newText(:,4);
   f = newText(:,5);
+elseif size(newText,2) == 6
+  U = newText(:,4);
+  f = newText(:,5);
+  d = newText(:,6);
 endif
-
 
 %% Calculate new points
 for i = 1:size(G,1)
@@ -183,6 +187,15 @@ newText = newText'
 
 %% Write to file
 fid = fopen(writeFileName, 'w');
-fprintf(fid, '%s %s %s %s\n', newText{:});
+switch size(newText,2)
+  case 3
+    fprintf(fid, '%s %s %s\n', newText{:});
+  case 4
+    fprintf(fid, '%s %s %s %s\n', newText{:});
+  case 5
+    fprintf(fid, '%s %s %s %s %s\n', newText{:});
+  case 6
+    fprintf(fid, '%s %s %s %s %s %s\n', newText{:});
+endswitch
 fclose(fid);
 ```
