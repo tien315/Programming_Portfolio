@@ -115,12 +115,13 @@ originPrime(2) = -input('Point of rotation Y: ');
 readFileName = input('Input filename: ', "s");
 writeFileName = input('Output filename: ', "s");
 
-% Parse Text
+% Dump text into a single column cell
 
 text = textread(readFileName, '%s', 'delimiter', ' ');
 col = 1;
 row = 0;
 
+% Sort and place
 for i = 1:length(text)
   temp = text{i};
   if length(temp)~=0
@@ -130,13 +131,11 @@ for i = 1:length(text)
         temp(1) =='r' || temp(1) =='f')
       col = col+1
     else
-
       row = row + 1
       col = 1
     endif
     newText{row, col} = temp;
   endif
-
 end
 
 %TODO: Clean Up
@@ -183,7 +182,7 @@ end
 
 newText(:,2) = x(:);
 newText(:,3) = y(:);
-newText = newText'
+newText = newText';
 
 %% Write to file
 fid = fopen(writeFileName, 'w');
@@ -197,5 +196,6 @@ switch size(newText,2)
   case 6
     fprintf(fid, '%s %s %s %s %s %s\n', newText{:});
 endswitch
+
 fclose(fid);
 ```
