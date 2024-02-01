@@ -109,25 +109,13 @@ end
 
 %% User input
 
-%theta = input('Degrees of rotation: ');;
-%originPrime(1) = -input('Point of rotation X: ');
-%originPrime(2) = -input('Point of rotation Y: ');
-%readFileName = input('Input filename: ', "s");
-%writeFileName = input('Output filename: ', "s");
-
-theta = 7;
-originPrime(1) = 0;
-originPrime(2) = 0;
-readFileName = "original.nc";
-writeFileName = "mod7.nc";
+theta = input('Degrees of rotation: ');;
+originPrime(1) = -input('Point of rotation X: ');
+originPrime(2) = -input('Point of rotation Y: ');
+readFileName = input('Input filename: ', "s");
+writeFileName = input('Output filename: ', "s");
 
 % Parse Text
-
-fid = fopen(readFileName);
-%text = textscan(fid, '%s', 'delimiter', ' ', ...
-%    'MultipleDelimsAsOne', true, ...
-%    'ReturnOnError', false, 'EndOfLine', '\r\n');
-%fclose(fid);
 
 text = textread(readFileName, '%s', 'delimiter', ' ');
 col = 1;
