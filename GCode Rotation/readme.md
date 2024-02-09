@@ -14,7 +14,7 @@ clc;
 
 %% User input
 
-theta = input('Degrees of rotation: ');;
+theta = input('Degrees of rotation: ');
 originPrime(1) = -input('Point of rotation X: ');
 originPrime(2) = -input('Point of rotation Y: ');
 readFileName = input('Input filename: ', "s");
@@ -42,20 +42,24 @@ for i = 1:size(G,1)
        %Extract position as double from string
        oldPos = [findExp(x,i); findExp(y,i); 1];
 
-       %Rotation matrix
-       Q = [cosd(theta), -sind(theta), 0; sind(theta), cosd(theta), 0;...
-           0, 0, 1];
-
-       %Translation matrix
-       T = [1, 0, originPrime(1); 0, 1, originPrime(2); 0, 0, 1];
-
-       %Rotate and find new coordinates
-       oldPos = T*oldPos;
-       posPrime = (Q)*oldPos;
-       posPrime = (T^-1)*posPrime;
+       posPrime = transformC(oldPos, originPrime, theta);
 
        x{i} = convertStringsToChars("X"+num2str(posPrime(1)));
        y{i} = convertStringsToChars("Y"+num2str(posPrime(2)));
+   end
+   if ((G{i} == "G2") || (G{i} == "G3" || G{i} == "G02") || ...
+           (G{i} == "G03")) && (size(text,2) > 4)
+       ch = convertStringsToChars(U(i));
+       cy = convertStringsToChars(f(i));
+       if ch(1) == "I" && cy(1) == "J"
+           %Extract position as double from string
+           oldPos = [findExp(U,i); findExp(f,i); 1];
+    
+           posPrime = transformC(oldPos, originPrime, theta);
+    
+           U{i} = convertStringsToChars("I"+num2str(posPrime(1)));
+           f{i} = convertStringsToChars("J"+num2str(posPrime(2)));
+       end
    end
    
    %append spaces to last lines (M30 or M31)
@@ -85,6 +89,20 @@ fclose(fid);
 function foundExp = findExp(vec, i)
     foundExp = str2double(regexp(vec{i},'[\d.\-]+','match'));
     return
+end
+
+function posPrime = transformC(oldPos, originPrime, theta)
+    %Rotation matrix
+    Q = [cosd(theta), -sind(theta), 0; sind(theta), cosd(theta), 0;...
+       0, 0, 1];
+    
+    %Translation matrix
+    T = [1, 0, originPrime(1); 0, 1, originPrime(2); 0, 0, 1];
+    
+    %Rotate and find new coordinates
+    oldPos = T*oldPos;
+    posPrime = (Q)*oldPos;
+    posPrime = (T^-1)*posPrime;
 end
 ```
 
