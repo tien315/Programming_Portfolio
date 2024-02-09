@@ -36,10 +36,10 @@ for i = 1:length(text)
         temp(1) =='x' || temp(1) =='y' || temp(1) =='i' || temp(1) =='j' ||...
         temp(1) =='U' || temp(1) =='R' || temp(1) =='F' || temp(1) =='u' ||...
         temp(1) =='r' || temp(1) =='f')
-      col = col+1
+      col = col+1;
     else
-      row = row + 1
-      col = 1
+      row = row + 1;
+      col = 1;
     endif
     newText{row, col} = temp;
   endif
@@ -93,11 +93,12 @@ newText = newText';
 
 %% Write to file
 fid = fopen(writeFileName, 'w');
-switch size(newText,2)
+
+switch size(newText,1)
   case 3
     fprintf(fid, '%s %s %s\n', newText{:});
   case 4
-    fprintf(fid, '%s %s %s %s\n', newText{:});
+    fprintf(fid, '%s %s %s %s\n', newText{:})
   case 5
     fprintf(fid, '%s %s %s %s %s\n', newText{:});
   case 6
