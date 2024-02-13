@@ -113,7 +113,7 @@ close all;
 clear all;
 clc;
 
-%% Functions
+% Functions
 
 %-------------------------------------------------------------------------------
 % Numbers in the dataset are stored as a string combined with letters (ex.
@@ -210,22 +210,22 @@ function circleCom = isCircleCom(gString)
 end
 %-------------------------------------------------------------------------------
 
-%% User input
+% User input
 theta = input('Degrees of rotation: ');;
 originPrime(1) = -input('Point of rotation X: ');
 originPrime(2) = -input('Point of rotation Y: ');
 readFileName = input('Input filename: ', "s");
 writeFileName = input('Output filename: ', "s");
 
-%% Dump text into a single column cell
+% Dump text into a single column cell
 fid = fopen(readFileName);
 text = textscan(fid, '%s', 'delimiter', ' ');
 fclose(fid);
 
-%% Unpack cell
+% Unpack cell
 text = text{1};
 
-%% Sort and place
+% Sort and place
 col = 1;
 row = 0;
 for i = 1:length(text)
@@ -241,7 +241,7 @@ for i = 1:length(text)
 end
 clear text;
 
-%% Divide columns
+% Divide columns
 G = newText(:,1);
 x = newText(:,2);
 y = newText(:,3);
@@ -250,7 +250,7 @@ if size(newText,2) > 4
    f = newText(:,5);
 endif
 
-%% Calculate new points
+% Calculate new points
 for i = 1:size(G,1)
    if isMovement(G(i))
       %Extract position as double from string
@@ -283,7 +283,7 @@ if size(newText,2) > 4
 endif
 newText = newText';
 
-%% Write to file
+% Write to file
 fid = fopen(writeFileName, 'w');
 
 switch size(newText,1)
