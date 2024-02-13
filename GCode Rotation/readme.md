@@ -164,10 +164,11 @@ end
 % newLine - bool, indicates if a new line is needed.
 function newLine = isNewLine(firstLetter)
   checkList = ["X" "Y" "x" "y" "I" "J" "i" "j" "U" "R" "u" "r" "F" "f"];
-  newLine = false;
+  newLine = false
   for i = 1:length(checkList)
+    i
     if checkList(i) == firstLetter
-      newLine = true;
+      newLine = true
       break;
     endif
   endfor
@@ -176,7 +177,7 @@ end
 
 %-------------------------------------------------------------------------------
 % This function checks if the string is a movement command.
-% Inputs: 
+% Inputs:
 % gString - string
 % Outputs:
 % movement - bool
@@ -229,8 +230,9 @@ text = text{1};
 col = 1;
 row = 0;
 for i = 1:length(text)
+  temp = text{i};
   if length(text{i})~=0
-    if (isNewLine(text{i}))
+    if (isNewLine(temp(1)))
       col = col + 1;
     else
       row = row + 1;
