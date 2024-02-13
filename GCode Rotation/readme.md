@@ -164,11 +164,10 @@ end
 % newLine - bool, indicates if a new line is needed.
 function newLine = isNewLine(firstLetter)
   checkList = ["X" "Y" "x" "y" "I" "J" "i" "j" "U" "R" "u" "r" "F" "f"];
-  newLine = false
+  newLine = false;
   for i = 1:length(checkList)
-    i
     if checkList(i) == firstLetter
-      newLine = true
+      newLine = true;
       break;
     endif
   endfor
