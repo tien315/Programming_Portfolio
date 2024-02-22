@@ -2,8 +2,6 @@
 
 This script rewrites the positions of a contour based on user input in degrees of rotation.
 
-> This has only been tested on .nc files formatted for use with [Leister](https://www.leister.com/en/Laser-Systems) laser welders.
-
 ```Matlab
 close all;
 clear all;
