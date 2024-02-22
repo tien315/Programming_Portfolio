@@ -2,8 +2,6 @@
 
 This script takes an .nc file, parses it for G02 or G03 commands, calculates centerpoints for I-J interpolations, then rewrites the file.
 
-> This has only been tested on .nc files formatted for use with [Leister](https://www.leister.com/en/Laser-Systems) laser welders.
-
 ```Matlab
 close all;
 clear all;
