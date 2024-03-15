@@ -3,8 +3,11 @@ clear all;
 clc;
 
 % User input
-readFileName = input('Input filename: ', "s");
-writeFileName = input('Output filename: ', "s");
+%readFileName = input('Input filename: ', "s");
+%writeFileName = input('Output filename: ', "s");
+readFileName = 'original.nc';
+writeFileName = 'modified.nc';
+
 
 % Parse Text and calculate new center points
 fid = fopen(readFileName);
@@ -30,21 +33,24 @@ for i = 1:size(G,1)
            end
            mIndex = mIndex-1;
        end
-       
        startCoord = findCoord(x,y,mIndex); %[x,y]
        endCoord = findCoord(x,y,i); %[x,y]
        newCenter = findNewCenter(startCoord, endCoord, findExp(U, i));
 
        if (isMovement(G{i}, "CCW"))
-           U{i} = convertStringsToChars("I"+num2str(newCenter(1,1)));
-           f{i} = convertStringsToChars("J"+num2str(newCenter(1,2)));
-       else
            U{i} = convertStringsToChars("I"+num2str(newCenter(2,1)));
            f{i} = convertStringsToChars("J"+num2str(newCenter(2,2)));
+       else
+           U{i} = convertStringsToChars("I"+num2str(newCenter(1,1)));
+           f{i} = convertStringsToChars("J"+num2str(newCenter(1,2)));
        end
    end
 end
-
+% Pad the columns
+% x = [x; " "];
+% y = [y; " "];
+% U = [U; " "];
+% f = [f; " "];
 rawToFile = [G,x,y,U,f]';
 
 % Write to file
@@ -74,7 +80,7 @@ end
 function movement = isMovement(gString, checkType)
   switch checkType
       case "CCW"
-          checkList = ["G02" "G2"];
+          checkList = ["G03" "G3"];
       case "circular movement"
           checkList = ["G02" "G03" "G2" "G3"];
   end
@@ -93,7 +99,9 @@ end
 % it into a double as the output.
 %--------------------------------------------------------------------------
 function foundExp = findExp(vec, i)
-    foundExp = str2double(regexp(vec{i},'[\d.]+','match'));
+    %foundExp = str2double(regexp(vec{i},'[\d.]+','match'));
+    foundExp = vec{i};
+    foundExp = str2double(foundExp(2:end));
     return
 end
 
@@ -108,7 +116,7 @@ end
 % Output:
 % newCenter - double (2 x 1)
 %--------------------------------------------------------------------------
-function [newCenter] = findNewCenter(startCoord, endCoord, U, iteration)
+function [newCenter] = findNewCenter(startCoord, endCoord, U)
     % Find distance between start and end points
     d = sqrt((endCoord(1)-startCoord(1))^2+(endCoord(2)-startCoord(2))^2);
     
@@ -117,19 +125,18 @@ function [newCenter] = findNewCenter(startCoord, endCoord, U, iteration)
     % turns d into 0.606 instead by truncation.)
     d = floor(d*1000)/1000;
     
-    % Check the distance between the start and end are not more than the 
-    % specified radius.
-    if d > abs(U)
-        disp(['Error, distance between start and end points is greater' ...
-            'than the radius specified. Please check line ' + ...
-            num2str(iteration)])
-        return
-    end
+%     % Check the distance between the start and end are not more than the 
+%     % specified radius.
+%     if d > abs(U)
+%         disp("Error, distance between start and end points is greater" +...
+%             "than the radius specified. Please check line " + ...
+%             num2str(iteration))
+%         return
+%     end
     
     x = d/2;
     y = sqrt(U^2-(d/2)^2);
     theta = atand((endCoord(2)-startCoord(2))/(endCoord(1)-startCoord(1)));
-    
     if (endCoord(1) < startCoord(1))
         theta = theta + 180;
     end
@@ -140,13 +147,12 @@ function [newCenter] = findNewCenter(startCoord, endCoord, U, iteration)
     % U values < 0 indicate an arc tracing > 180 degrees so we need to flip
     % the center used.
     if U < 0
-        center1 = Q*[x;-y];
-        center2 = Q*[x;y];
-    else    
-        center1 = Q*[x;y];
-        center2 = Q*[x;-y];
+        G2 = Q*[x;y];
+        G3 = Q*[x;-y];
+    else 
+        G2 = Q*[x;-y];
+        G3 = Q*[x;y];
     end
-    
-    newCenter = round([center2'; center1'], 3);        
+    newCenter = round([G2'; G3'], 3);        
     return
 end
