@@ -1,6 +1,4 @@
-%Alan Tieng
-%ME325 Project
-%Exotic Combined Cycle Generator
+%Exotic Combined Cycle Generator Optimization Test
 %4/17/2021
 
 %{
