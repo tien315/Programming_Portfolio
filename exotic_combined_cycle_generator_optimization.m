@@ -1,4 +1,4 @@
-%Exotic Combined Cycle Generator Optimization Test
+%Exotic Combined Cycle Generator Optimization
 %4/17/2021
 
 %{
