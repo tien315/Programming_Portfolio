@@ -1,5 +1,5 @@
 %Exotic Combined Cycle Generator Optimization
-%4/17/2021
+%4/17/2021 
 
 %{
 This script will calculate the states of the combined cycle generator and
